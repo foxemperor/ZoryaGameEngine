@@ -8,3 +8,9 @@ if globals.IsWindows():
     MS_BUILD_PATH = "C:\\\\" + MS_BUILD_PATH
 
     subprocess.call(["cmd.exe", "/c", MS_BUILD_PATH, "{}.sln".format(globals.ENGINE_NAME), "/property:Configuration={}".format(CONFIGURATION)])
+
+if globals.IsLinux():
+    subprocess.call(["make", "config={}".format(CONFIGURATION)])
+
+if globals.IsMac():
+    subprocess.call(["make", "config={}".format(CONFIGURATION)])
