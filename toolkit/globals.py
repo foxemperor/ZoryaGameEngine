@@ -1,5 +1,9 @@
 import sys, platform
 
+ENGINE_NAME = "zorya"
+PROJECT_NAME = "zoryagamekit"
+TOOL_DIR = "toolkit"
+
 V_MAJOR = 1
 V_MINOR = 0
 PLATFORM = sys.platform
