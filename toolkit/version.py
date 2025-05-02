@@ -1,6 +1,3 @@
-# Переделать потом на более высоком уровне
+import globals
 
-MAJOR = 0
-MINOR = 0
-
-print("Zorya Toolkit - v{}.{}".format(MAJOR, MINOR))
+print("Zorya Toolkit - v{}.{}".format(globals.V_MAJOR, globals.V_MINOR))
