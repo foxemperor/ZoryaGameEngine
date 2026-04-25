@@ -45,7 +45,8 @@ project "zoryagamekit"
         "opengl32"
     }
 
-    flags { "FatalWarnings" }
+    warnings "Extra"
+    fatalwarnings { "All" }
 
     filter "configurations:Debug"
         defines { "DEBUG", "ZGE_DEBUG" }
