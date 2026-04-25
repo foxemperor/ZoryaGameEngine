@@ -8,12 +8,19 @@ workspace "zorya"
         "Release"
     }
 
+-- Пути к vendor-зависимостям
+VENDOR_SDL3_INCLUDE = "vendor/SDL3/include"
+VENDOR_SDL3_LIB     = "vendor/SDL3/lib/x64"
+
 project "zoryagamekit"
     location "zoryagamekit"
     kind "ConsoleApp"
     language "C++"
-    cppdialect "C++17"
-    staticruntime "on"
+    cppdialect "C++20"
+    staticruntime "off"
+
+    targetdir ("bin/%{cfg.buildcfg}")
+    objdir    ("bin-int/%{cfg.buildcfg}")
 
     files
     {
@@ -21,7 +28,31 @@ project "zoryagamekit"
         "%{prj.name}/src/**.cpp"
     }
 
-    flags
+    includedirs
     {
-        "FatalWarnings"
+        "%{prj.name}/include",
+        VENDOR_SDL3_INCLUDE
     }
+
+    libdirs
+    {
+        VENDOR_SDL3_LIB
+    }
+
+    links
+    {
+        "SDL3",
+        "opengl32"
+    }
+
+    flags { "FatalWarnings" }
+
+    filter "configurations:Debug"
+        defines { "DEBUG", "ZGE_DEBUG" }
+        symbols "on"
+        optimize "off"
+
+    filter "configurations:Release"
+        defines { "NDEBUG", "ZGE_RELEASE" }
+        optimize "on"
+        symbols "off"

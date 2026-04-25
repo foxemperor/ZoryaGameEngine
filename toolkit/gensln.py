@@ -1,3 +1,10 @@
-import subprocess
+import subprocess, sys, os
 
-subprocess.call(["cmd.exe", "/c", "premake\\premake5", "vs2022"])
+if sys.platform == "win32":
+    premake = os.path.join("premake", "premake5.exe")
+elif sys.platform == "darwin":
+    premake = os.path.join("premake", "premake5")
+else:
+    premake = os.path.join("premake", "premake5.linux")
+
+subprocess.call([premake, "vs2022"])
