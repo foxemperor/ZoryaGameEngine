@@ -3,12 +3,20 @@
 #include <string.h>
 #include "glad/glad.h"
 
-static GLADloadproc glad_get_proc_from_userptr;
+/*
+ * glad_get_proc_from_userptr хранит указатель на SDL_GL_GetProcAddress.
+ * SDL3 объявляет его как SDL_FunctionPointer SDL_GL_GetProcAddress(const char*).
+ * Мы храним его как void(*)(void) и при вызове делаем приведение через
+ * union, чтобы избежать UB при касте между указателями на функции.
+ */
+typedef void (*GLfuncptr)(void);
+typedef GLfuncptr (*GLADgetproctype)(const char*);
 
-/* Используем uintptr_t для безопасного приведения int->void* на x64 */
-static void* glad_get_proc(const char *namez) {
-    if (glad_get_proc_from_userptr == NULL) return NULL;
-    return (void*)(uintptr_t)glad_get_proc_from_userptr(namez);
+static GLADgetproctype glad_getproc = NULL;
+
+static GLfuncptr glad_get_proc(const char *name) {
+    if (glad_getproc == NULL) return NULL;
+    return glad_getproc(name);
 }
 
 PFNGLCULLFACEPROC glad_glCullFace = NULL;
@@ -194,7 +202,11 @@ static void glad_load_gl_procs(void) {
 }
 
 int gladLoadGLLoader(GLADloadproc load) {
-    glad_get_proc_from_userptr = load;
+    /* SDL3::SDL_GL_GetProcAddress возвращает SDL_FunctionPointer (void(*)(void)).
+       Кастим через union чтобы избежать UB при приведении указателей на функции. */
+    union { GLADloadproc voidfn; GLADgetproctype getproc; } u;
+    u.voidfn = load;
+    glad_getproc = u.getproc;
     glad_load_gl_procs();
     if (glad_glGetString == NULL) return 0;
     return 1;

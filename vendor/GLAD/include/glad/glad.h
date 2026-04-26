@@ -422,7 +422,13 @@ extern PFNGLGETSTRINGIPROC glad_glGetStringi;
 #define glBlitFramebuffer           glad_glBlitFramebuffer
 #define glGetStringi                glad_glGetStringi
 
-typedef int (*GLADloadproc)(const char *name);
+/*
+ * GLADloadproc — тип функции-загрузчика адресов GL-функций.
+ * SDL3::SDL_GL_GetProcAddress возвращает SDL_FunctionPointer (void(*)(void)),
+ * поэтому определяем тип как указатель на функцию void(void), что совместимо
+ * на всех платформах при касте через void*.
+ */
+typedef void (*GLADloadproc)(void);
 int gladLoadGLLoader(GLADloadproc load);
 
 #ifdef __cplusplus
