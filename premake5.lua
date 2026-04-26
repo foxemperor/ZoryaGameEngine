@@ -9,9 +9,11 @@ workspace "zorya"
     }
 
 -- Пути к vendor-зависимостям
-VENDOR_SDL3_INCLUDE = "vendor/SDL3/include"
-VENDOR_SDL3_LIB     = "vendor/SDL3/lib/x64"
-VENDOR_SDL3_DLL     = "vendor/SDL3/lib/x64/SDL3.dll"
+VENDOR_SDL3_INCLUDE  = "vendor/SDL3/include"
+VENDOR_SDL3_LIB      = "vendor/SDL3/lib/x64"
+VENDOR_SDL3_DLL      = "vendor/SDL3/lib/x64/SDL3.dll"
+VENDOR_GLAD_INCLUDE  = "vendor/GLAD/include"
+VENDOR_GLAD_SRC      = "vendor/GLAD/src/glad.c"
 
 project "zoryagamekit"
     location "zoryagamekit"
@@ -26,13 +28,15 @@ project "zoryagamekit"
     files
     {
         "%{prj.name}/include/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        VENDOR_GLAD_SRC
     }
 
     includedirs
     {
         "%{prj.name}/include",
-        VENDOR_SDL3_INCLUDE
+        VENDOR_SDL3_INCLUDE,
+        VENDOR_GLAD_INCLUDE
     }
 
     libdirs
