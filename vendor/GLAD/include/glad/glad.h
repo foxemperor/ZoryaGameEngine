@@ -145,6 +145,13 @@ typedef void (APIENTRY *GLDEBUGPROC)(GLenum source, GLenum type, GLuint id, GLen
 #define GL_MAJOR_VERSION                  0x821B
 #define GL_MINOR_VERSION                  0x821C
 
+/* glGetString enums */
+#define GL_VENDOR                         0x1F00
+#define GL_RENDERER                       0x1F01
+#define GL_VERSION                        0x1F02
+#define GL_EXTENSIONS                     0x1F03
+#define GL_SHADING_LANGUAGE_VERSION       0x8B8C
+
 typedef void   (APIENTRYP PFNGLCULLFACEPROC) (GLenum mode);
 typedef void   (APIENTRYP PFNGLFRONTFACEPROC) (GLenum mode);
 typedef void   (APIENTRYP PFNGLHINTPROC) (GLenum target, GLenum mode);
