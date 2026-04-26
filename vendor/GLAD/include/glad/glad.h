@@ -25,19 +25,11 @@ extern "C" {
 #endif
 
 #include <stddef.h>
+#include <stdint.h>
+
 #ifndef GLEXT_64_TYPES_DEFINED
-#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
-#include <inttypes.h>
-typedef int64_t GLint64;
+typedef int64_t  GLint64;
 typedef uint64_t GLuint64;
-#elif defined(_WIN32)
-typedef signed   __int64  GLint64;
-typedef unsigned __int64  GLuint64;
-#else
-#include <inttypes.h>
-typedef int64_t GLint64;
-typedef uint64_t GLuint64;
-#endif
 #define GLEXT_64_TYPES_DEFINED
 #endif
 
@@ -70,7 +62,7 @@ typedef unsigned short GLhalf;
 typedef GLint GLfixed;
 typedef ptrdiff_t GLintptr;
 typedef ptrdiff_t GLsizeiptr;
-typedef int64_t GLint64EXT;
+typedef int64_t  GLint64EXT;
 typedef uint64_t GLuint64EXT;
 typedef struct __GLsync *GLsync;
 struct _cl_context;

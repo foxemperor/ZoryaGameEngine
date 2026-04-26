@@ -5,9 +5,10 @@
 
 static GLADloadproc glad_get_proc_from_userptr;
 
+/* Используем uintptr_t для безопасного приведения int->void* на x64 */
 static void* glad_get_proc(const char *namez) {
-    if(glad_get_proc_from_userptr == NULL) return NULL;
-    return (void*)glad_get_proc_from_userptr(namez);
+    if (glad_get_proc_from_userptr == NULL) return NULL;
+    return (void*)(uintptr_t)glad_get_proc_from_userptr(namez);
 }
 
 PFNGLCULLFACEPROC glad_glCullFace = NULL;
@@ -115,7 +116,6 @@ static void glad_load_gl_procs(void) {
     glad_glTexImage2D = (PFNGLTEXIMAGE2DPROC)glad_get_proc("glTexImage2D");
     glad_glDrawBuffer = (PFNGLDRAWBUFFERPROC)glad_get_proc("glDrawBuffer");
     glad_glClear = (PFNGLCLEARPROC)glad_get_proc("glClear");
-    glad_glClearColor = (PFNGLCLEARCOLORPROC)glad_get_proc("glClear");
     glad_glClearColor = (PFNGLCLEARCOLORPROC)glad_get_proc("glClearColor");
     glad_glClearDepth = (PFNGLCLEARDEPTHPROC)glad_get_proc("glClearDepth");
     glad_glClearStencil = (PFNGLCLEARSTENCILPROC)glad_get_proc("glClearStencil");
